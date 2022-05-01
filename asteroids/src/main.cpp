@@ -11,6 +11,7 @@ int main()
         return EXIT_FAILURE;
 
     sf::Sprite sprite(texture);
+    sprite.setScale(sf::Vector2f(0.25, 0.25));
 
     while (window.isOpen())
     {
