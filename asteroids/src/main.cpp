@@ -2,9 +2,15 @@
 
 int main()
 {
-    sf::RenderWindow window(sf::VideoMode(200, 200), "SFML works!");
-    sf::CircleShape shape(100.f);
-    shape.setFillColor(sf::Color::Green);
+    // Create Main Display Window with original dimensions
+    sf::RenderWindow window(sf::VideoMode(1024, 768), "Asteroids");
+
+    // Load Ship Sprite fro file
+    sf::Texture texture;
+    if(!texture.loadFromFile("sprites/ship.png"))
+        return EXIT_FAILURE;
+
+    sf::Sprite sprite(texture);
 
     while (window.isOpen())
     {
@@ -16,7 +22,7 @@ int main()
         }
 
         window.clear();
-        window.draw(shape);
+        window.draw(sprite);
         window.display();
     }
 
