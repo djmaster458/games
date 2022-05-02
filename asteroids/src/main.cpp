@@ -1,4 +1,5 @@
 #include <SFML/Graphics.hpp>
+#include "command.hpp"
 
 int main()
 {
@@ -6,12 +7,12 @@ int main()
     sf::RenderWindow window(sf::VideoMode(1024, 768), "Asteroids");
 
     // Load Ship Sprite fro file
-    sf::Texture texture;
-    if(!texture.loadFromFile("sprites/ship.png"))
+    sf::Texture shipTexture;
+    if(!shipTexture.loadFromFile("sprites/ship.png"))
         return EXIT_FAILURE;
 
-    sf::Sprite sprite(texture);
-    sprite.setScale(sf::Vector2f(0.25, 0.25));
+    sf::Sprite ship(shipTexture);
+    ship.setScale(sf::Vector2f(0.25, 0.25));
 
     while (window.isOpen())
     {
@@ -19,22 +20,25 @@ int main()
         while (window.pollEvent(event))
         {
             if (event.type == sf::Event::Closed)
+            {
                 window.close();
+            }
             else if(event.type == sf::Event::KeyPressed)
             {
+                Command *command = nullptr;
                 switch (event.key.code)
                 {
                 case sf::Keyboard::W:
-                    /* move up */
+                    /* accelerate */
                     break;
                 case sf::Keyboard::A:
-                    /* move left */
+                    command = new RotateShipCommand(&ship, -7.5);
                     break;
                 case sf::Keyboard::S:
-                    /* move down */
+                    /* decelerate */
                     break;
                 case sf::Keyboard::D:
-                    /* move right */
+                    command = new RotateShipCommand(&ship, 7.5);
                     break;
                 case sf::Keyboard::Space:
                     /* shoot */
@@ -43,11 +47,17 @@ int main()
                 default:
                     break;
                 }
+
+                if(command)
+                {
+                    command->execute();
+                    delete command;
+                }   
             }
         }
 
         window.clear();
-        window.draw(sprite);
+        window.draw(ship);
         window.display();
     }
 
