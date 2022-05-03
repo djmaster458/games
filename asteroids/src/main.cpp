@@ -1,6 +1,8 @@
 #include <SFML/Graphics.hpp>
 #include "command.hpp"
 
+#define ROTATE_SPEED 180.f
+
 int main()
 {
     // Create Main Display Window with original dimensions
@@ -8,62 +10,51 @@ int main()
 
     // Load Ship Sprite from file
     sf::Texture shipTexture;
-    if(!shipTexture.loadFromFile("sprites/ship.png"))
+    if (!shipTexture.loadFromFile("sprites/ship.png"))
         return EXIT_FAILURE;
 
-    //Create, rescale, and center sprite
+    // Create, rescale, and center sprite
     sf::Sprite ship(shipTexture);
     ship.setOrigin(sf::Vector2f(128.0, 128.0));
     ship.setScale(sf::Vector2f(0.1, 0.1));
     ship.setPosition(sf::Vector2f(512, 384));
 
-    //Create/Start game clock
+    // Create/Start game clock
     sf::Clock clock;
 
     while (window.isOpen())
     {
         sf::Event event;
         sf::Time deltaTime = clock.restart();
+
         while (window.pollEvent(event))
         {
             if (event.type == sf::Event::Closed)
             {
                 window.close();
             }
-            else if(event.type == sf::Event::KeyPressed)
-            {
-                Command *command = nullptr;
-                switch (event.key.code)
-                {
-                case sf::Keyboard::W:
-                    /* accelerate */
-                    break;
-                case sf::Keyboard::A:
-                    command = new RotateShipCommand(&ship, deltaTime, -360.0);
-                    break;
-                case sf::Keyboard::S:
-                    /* decelerate */
-                    break;
-                case sf::Keyboard::D:
-                    command = new RotateShipCommand(&ship, deltaTime, 360.0);
-                    break;
-                case sf::Keyboard::Space:
-                    /* shoot */
-                    break;
-                
-                default:
-                    break;
-                }
-
-                if(command)
-                {
-                    command->execute();
-                    delete command;
-                }   
-            }
         }
 
-        window.clear();
+        /*
+         * Movement
+         */
+        Command *command = nullptr;
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
+        {
+            command = new RotateShipCommand(&ship, deltaTime, ROTATE_SPEED);
+        }
+        else if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
+        {
+            command = new RotateShipCommand(&ship, deltaTime, -ROTATE_SPEED);
+        }
+
+        if (command)
+        {
+            command->execute();
+            delete command;
+        }
+
+        window.clear(sf::Color::Black);
         window.draw(ship);
         window.display();
     }
