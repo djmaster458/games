@@ -6,5 +6,5 @@
 
 void RotateShipCommand::execute()
 {
-    _sprite->rotate(_angle);
+    _sprite->rotate(_angle * _time.asSeconds());
 }

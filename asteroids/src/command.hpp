@@ -19,14 +19,15 @@ public:
 class RotateShipCommand : public Command
 {
 public:
-    RotateShipCommand(Sprite *sprite, float angle)
-    : _sprite(sprite), _angle(angle)
+    RotateShipCommand(Sprite *sprite, const Time &deltaTime, float angle)
+    : _sprite(sprite), _time(deltaTime), _angle(angle)
     {}
 
     virtual void execute();
 
 private:
     Sprite *_sprite;
+    const Time &_time;
     float _angle;
 };
 #endif
