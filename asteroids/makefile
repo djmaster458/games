@@ -8,7 +8,11 @@ GAME = asteroids
 SRC_DIR = src
 BUILD_DIR = build
 
-all: $(GAME)
+all: $(BUILD_DIR) $(GAME) 
+
+# Build output at runtime if not existing
+$(BUILD_DIR):
+	mkdir -p build
 
 # Using generics to generate arrays of src, obj, and dep files
 # Note: use another line as below to add source files located in other folders
@@ -23,13 +27,13 @@ DEPS = $(OBJS:%.o=%.d)
 
 # Recipe for generating objects into build
 $(BUILD_DIR)/%.o: $(SRC_DIR)/%.cpp
-	mkdir -p $(@D)
 	$(CC) $(CFLAGS) -c $< -o $@ $(LIBS)
 
 # Generate executable, 
 # use @ variable to compile to target executable from build dir objects
 $(GAME): $(OBJS)
 	$(CC) -o $@ $^ $(LIBS)
+
 
 # Cleanup rule, delete build/ and executable
 .PHONY: clean
