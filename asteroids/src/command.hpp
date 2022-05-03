@@ -6,28 +6,45 @@
 using namespace sf;
 
 /*
-* Generic Class for Player Input Handling
-* Using Command Pattern for Input Handling
-*/
+ * Generic Class for issuing commands to sprites
+ * Using Command Pattern for Input Handling
+ */
 class Command
 {
 public:
-    virtual ~Command(){}
+    virtual ~Command() {}
     virtual void execute() = 0;
 };
 
-class RotateShipCommand : public Command
+class RotateCommand : public Command
 {
 public:
-    RotateShipCommand(Sprite *sprite, const Time &deltaTime, float angle)
-    : _sprite(sprite), _time(deltaTime), _angle(angle)
-    {}
+    RotateCommand(Sprite *sprite, const Time &deltaTime, float angle)
+        : _sprite(sprite), _deltaTime(deltaTime), _angle(angle)
+    {
+    }
 
     virtual void execute();
 
 private:
     Sprite *_sprite;
-    const Time &_time;
+    const Time &_deltaTime;
     float _angle;
+};
+
+class MoveCommand : public Command
+{
+public:
+    MoveCommand(Sprite *sprite, const Time &deltaTime, float speed)
+        : _sprite(sprite), _deltaTime(deltaTime), _speed(speed)
+    {
+    }
+
+    virtual void execute();
+
+private:
+    Sprite *_sprite;
+    const Time &_deltaTime;
+    float _speed;
 };
 #endif

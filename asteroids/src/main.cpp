@@ -3,49 +3,50 @@
 
 #define ROTATE_SPEED 180.f
 
+using namespace sf;
 int main()
 {
     // Create Main Display Window with original dimensions
-    sf::RenderWindow window(sf::VideoMode(1024, 768), "Asteroids");
+    RenderWindow window(VideoMode(1024, 768), "Asteroids");
 
     // Load Ship Sprite from file
-    sf::Texture shipTexture;
+    Texture shipTexture;
     if (!shipTexture.loadFromFile("sprites/ship.png"))
         return EXIT_FAILURE;
 
     // Create, rescale, and center sprite
-    sf::Sprite ship(shipTexture);
-    ship.setOrigin(sf::Vector2f(128.0, 128.0));
-    ship.setScale(sf::Vector2f(0.1, 0.1));
-    ship.setPosition(sf::Vector2f(512, 384));
+    Sprite ship(shipTexture);
+    ship.setOrigin(Vector2f(128.0, 128.0));
+    ship.setScale(Vector2f(0.1, 0.1));
+    ship.setPosition(Vector2f(512, 384));
 
     // Create/Start game clock
-    sf::Clock clock;
+    Clock clock;
 
     while (window.isOpen())
     {
-        sf::Event event;
-        sf::Time deltaTime = clock.restart();
+        Event event;
+        Time deltaTime = clock.restart();
 
         while (window.pollEvent(event))
         {
-            if (event.type == sf::Event::Closed)
+            if (event.type == Event::Closed)
             {
                 window.close();
             }
         }
 
         /*
-         * Movement
+         * Rotation
          */
         Command *command = nullptr;
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
+        if (Keyboard::isKeyPressed(Keyboard::D))
         {
-            command = new RotateShipCommand(&ship, deltaTime, ROTATE_SPEED);
+            command = new RotateCommand(&ship, deltaTime, ROTATE_SPEED);
         }
-        else if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
+        else if (Keyboard::isKeyPressed(Keyboard::A))
         {
-            command = new RotateShipCommand(&ship, deltaTime, -ROTATE_SPEED);
+            command = new RotateCommand(&ship, deltaTime, -ROTATE_SPEED);
         }
 
         if (command)
@@ -54,7 +55,22 @@ int main()
             delete command;
         }
 
-        window.clear(sf::Color::Black);
+        /*
+         * Movement
+         */
+        if(Keyboard::isKeyPressed(Keyboard::W))
+        {
+            //Accelerate
+            command = new MoveCommand(&ship, deltaTime, 50.f);
+        }
+
+        if(command)
+        {
+            command->execute();
+            delete command;
+        }
+
+        window.clear(Color::Black);
         window.draw(ship);
         window.display();
     }
