@@ -11,14 +11,13 @@ int main()
     if(!shipTexture.loadFromFile("sprites/ship.png"))
         return EXIT_FAILURE;
 
-    //Create and rescale sprite
-    //Move to center
+    //Create, rescale, and center sprite
     sf::Sprite ship(shipTexture);
     ship.setOrigin(sf::Vector2f(128.0, 128.0));
-    ship.setScale(sf::Vector2f(0.05, 0.05));
+    ship.setScale(sf::Vector2f(0.1, 0.1));
     ship.setPosition(sf::Vector2f(512, 384));
 
-    //Create game clock
+    //Create/Start game clock
     sf::Clock clock;
 
     while (window.isOpen())
@@ -46,8 +45,7 @@ int main()
                     /* decelerate */
                     break;
                 case sf::Keyboard::D:
-                    //command = new RotateShipCommand(&ship, deltaTime, 360.0);
-                    ship.rotate(deltaTime.asSeconds() * 360.0);
+                    command = new RotateShipCommand(&ship, deltaTime, 360.0);
                     break;
                 case sf::Keyboard::Space:
                     /* shoot */
