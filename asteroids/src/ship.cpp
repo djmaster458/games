@@ -2,8 +2,8 @@
 #include <math.h>
 
 #define PI 3.14159265
-#define ACCEL_FACTOR 0.1f
-#define MAX_VELOCITY 5.f
+#define ACCEL_FACTOR 0.2f
+#define MAX_VELOCITY 50.f
 
 static float DegToRad(float degrees)
 {
@@ -27,8 +27,8 @@ void Ship::Accelerate(float deltaTime)
 
 void Ship::Decelerate()
 {
-    acceleration.x = 0.;
-    acceleration.y = 0.;
+    acceleration.x = 0.f;
+    acceleration.y = 0.f;
 }
 
 void Ship::Move(float deltaTime)
@@ -36,14 +36,23 @@ void Ship::Move(float deltaTime)
     velocity.x += acceleration.x * deltaTime;
     velocity.y += acceleration.y * deltaTime;
 
+    // Clamp velocity
     if(velocity.x > MAX_VELOCITY)
     {
         velocity.x = MAX_VELOCITY;
+    }
+    else if(velocity.x < -MAX_VELOCITY)
+    {
+        velocity.x = -MAX_VELOCITY;
     }
 
     if(velocity.y > MAX_VELOCITY)
     {
         velocity.y = MAX_VELOCITY;
+    }
+    else if(velocity.y < -MAX_VELOCITY)
+    {
+        velocity.y = -MAX_VELOCITY;
     }
 
     mSprite.move(velocity.x * deltaTime, velocity.y * deltaTime);

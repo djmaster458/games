@@ -53,7 +53,7 @@ int main()
         }
         else
         {
-            
+            ship.Decelerate();
         }
 
         ship.Move(deltaTime);
