@@ -34,7 +34,6 @@ $(BUILD_DIR)/%.o: $(SRC_DIR)/%.cpp
 $(GAME): $(OBJS)
 	$(CC) -o $@ $^ $(LIBS)
 
-
 # Cleanup rule, delete build/ and executable
 .PHONY: clean
 clean:

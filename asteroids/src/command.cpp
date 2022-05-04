@@ -7,7 +7,7 @@
 
 #define PI 3.14159265
 
-float DegToRad(float degrees)
+static float DegToRad(float degrees)
 {
     return degrees * PI / 180.f;
 }
