@@ -38,6 +38,9 @@ int main()
             }
         }
 
+        /*
+         * Ship Rotation and Movement
+         */
         if(Keyboard::isKeyPressed(Keyboard::D))
         {
             ship.Rotate(ROTATE_SPEED, deltaTime);
@@ -57,40 +60,6 @@ int main()
         }
 
         ship.Move(deltaTime);
-
-        // /*
-        //  * Rotation
-        //  */
-        // Command *command = nullptr;
-        // if (Keyboard::isKeyPressed(Keyboard::D))
-        // {
-        //     command = new RotateCommand(&ship, deltaTime, ROTATE_SPEED);
-        // }
-        // else if (Keyboard::isKeyPressed(Keyboard::A))
-        // {
-        //     command = new RotateCommand(&ship, deltaTime, -ROTATE_SPEED);
-        // }
-
-        // if (command)
-        // {
-        //     command->execute();
-        //     delete command;
-        // }
-
-        // /*
-        //  * Movement
-        //  */
-        // if(Keyboard::isKeyPressed(Keyboard::W))
-        // {
-        //     //Accelerate
-        //     command = new MoveCommand(&ship, deltaTime, 50.f);
-        // }
-
-        // if(command)
-        // {
-        //     command->execute();
-        //     delete command;
-        // }
 
         window.clear(Color::Black);
         window.draw(shipSprite);

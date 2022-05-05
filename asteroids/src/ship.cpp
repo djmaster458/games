@@ -2,8 +2,8 @@
 #include <math.h>
 
 #define PI 3.14159265
-#define ACCEL_FACTOR 0.2f
-#define MAX_VELOCITY 50.f
+#define ACCEL_FACTOR 0.15f
+#define MAX_VELOCITY 180.f
 
 static float DegToRad(float degrees)
 {
