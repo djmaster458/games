@@ -1,5 +1,4 @@
 #include <SFML/Graphics.hpp>
-#include "command.hpp"
 #include "ship.hpp"
 
 #define ROTATE_SPEED 180.f
