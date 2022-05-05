@@ -1,5 +1,6 @@
 #include <SFML/Graphics.hpp>
 #include "command.hpp"
+#include "ship.hpp"
 
 #define ROTATE_SPEED 180.f
 
@@ -15,18 +16,19 @@ int main()
         return EXIT_FAILURE;
 
     // Create, rescale, and center sprite
-    Sprite ship(shipTexture);
-    ship.setOrigin(Vector2f(128.0, 128.0));
-    ship.setScale(Vector2f(0.1, 0.1));
-    ship.setPosition(Vector2f(512, 384));
+    Sprite shipSprite(shipTexture);
+    shipSprite.setOrigin(Vector2f(128.0, 128.0));
+    shipSprite.setScale(Vector2f(0.1, 0.1));
+    shipSprite.setPosition(Vector2f(512, 384));
 
     // Create/Start game clock
     Clock clock;
+    Ship ship(shipSprite);
 
     while (window.isOpen())
     {
         Event event;
-        Time deltaTime = clock.restart();
+        float deltaTime = clock.restart().asSeconds();
 
         while (window.pollEvent(event))
         {
@@ -37,41 +39,30 @@ int main()
         }
 
         /*
-         * Rotation
+         * Ship Rotation and Movement
          */
-        Command *command = nullptr;
-        if (Keyboard::isKeyPressed(Keyboard::D))
+        if(Keyboard::isKeyPressed(Keyboard::D))
         {
-            command = new RotateCommand(&ship, deltaTime, ROTATE_SPEED);
+            ship.Rotate(ROTATE_SPEED, deltaTime);
         }
-        else if (Keyboard::isKeyPressed(Keyboard::A))
+        else if(Keyboard::isKeyPressed(Keyboard::A))
         {
-            command = new RotateCommand(&ship, deltaTime, -ROTATE_SPEED);
+            ship.Rotate(-ROTATE_SPEED, deltaTime);
         }
 
-        if (command)
-        {
-            command->execute();
-            delete command;
-        }
-
-        /*
-         * Movement
-         */
         if(Keyboard::isKeyPressed(Keyboard::W))
         {
-            //Accelerate
-            command = new MoveCommand(&ship, deltaTime, 50.f);
+            ship.Accelerate(deltaTime);
+        }
+        else
+        {
+            ship.Decelerate();
         }
 
-        if(command)
-        {
-            command->execute();
-            delete command;
-        }
+        ship.Move(deltaTime);
 
         window.clear(Color::Black);
-        window.draw(ship);
+        window.draw(shipSprite);
         window.display();
     }
 
