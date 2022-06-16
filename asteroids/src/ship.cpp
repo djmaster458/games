@@ -2,7 +2,7 @@
 #include <math.h>
 
 #define PI 3.14159265
-#define ACCEL_FACTOR 0.15f
+#define ACCEL_FACTOR 0.18f
 #define MAX_VELOCITY 180.f
 
 static float DegToRad(float degrees)
@@ -21,8 +21,24 @@ const Vector2f Ship::GetDirection()
 void Ship::Accelerate(float deltaTime)
 {
     Vector2f direction = GetDirection();
-    acceleration.x += ACCEL_FACTOR * direction.x;
-    acceleration.y += ACCEL_FACTOR * direction.y;
+
+    // Clamp Acceleration
+    if (velocity.x > MAX_VELOCITY || velocity.x < -MAX_VELOCITY)
+    {
+        acceleration.x = 0.f;
+    }
+    else
+    {
+        acceleration.x += ACCEL_FACTOR * direction.x;
+    }
+    if (velocity.y > MAX_VELOCITY || velocity.y < -MAX_VELOCITY)
+    {
+        acceleration.y = 0.f;
+    }
+    else
+    {
+        acceleration.y += ACCEL_FACTOR * direction.y;
+    }
 }
 
 void Ship::Decelerate()
@@ -37,20 +53,20 @@ void Ship::Move(float deltaTime)
     velocity.y += acceleration.y * deltaTime;
 
     // Clamp velocity
-    if(velocity.x > MAX_VELOCITY)
+    if (velocity.x > MAX_VELOCITY)
     {
         velocity.x = MAX_VELOCITY;
     }
-    else if(velocity.x < -MAX_VELOCITY)
+    else if (velocity.x < -MAX_VELOCITY)
     {
         velocity.x = -MAX_VELOCITY;
     }
 
-    if(velocity.y > MAX_VELOCITY)
+    if (velocity.y > MAX_VELOCITY)
     {
         velocity.y = MAX_VELOCITY;
     }
-    else if(velocity.y < -MAX_VELOCITY)
+    else if (velocity.y < -MAX_VELOCITY)
     {
         velocity.y = -MAX_VELOCITY;
     }
