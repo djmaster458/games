@@ -27,7 +27,7 @@ DEPS = $(OBJS:%.o=%.d)
 
 # Recipe for generating objects into build
 $(BUILD_DIR)/%.o: $(SRC_DIR)/%.cpp
-	$(CC) $(CFLAGS) -c $< -o $@ $(LIBS)
+	$(CC) $(CFLAGS) -c $< -o $@
 
 # Generate executable, 
 # use @ variable to compile to target executable from build dir objects
