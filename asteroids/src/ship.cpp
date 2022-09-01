@@ -1,13 +1,12 @@
 #include "ship.hpp"
 #include <math.h>
 
-#define PI 3.14159265
 #define ACCEL_FACTOR 0.18f
 #define MAX_VELOCITY 180.f
 
 static float DegToRad(float degrees)
 {
-    return degrees * PI / 180.f;
+    return degrees * M_PI / 180.f;
 }
 
 const Vector2f Ship::GetDirection()
