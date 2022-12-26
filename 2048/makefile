@@ -45,7 +45,7 @@ distclean:
 SILENCE = @
 
 #---- Outputs ----#
-COMPONENT_NAME = 2048_Tests
+COMPONENT_NAME = 2048
 
 #--- Inputs ----#
 PROJECT_HOME_DIR = .
