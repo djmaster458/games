@@ -1,13 +1,18 @@
 #ifndef BOARD_H
 #define BOARD_H
 
+#include <vector>
+
+using namespace std;
+
 class Board
 {
 public:
-    void Foo(void);
+    Board();
+    const vector<vector<uint32_t>> &GetState(void);
 
 private:
-    int x;
+    vector<vector<uint32_t>> boardState;
 };
 
 

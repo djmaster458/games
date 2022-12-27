@@ -1,6 +1,12 @@
 #include "Board.hpp"
 #include <iostream>
 
-void Board::Foo(void) {
-    std::cout << "/* Foo works */" << std::endl;
+Board::Board()
+{
+    boardState = {{0,0,0,0}, {0,0,0,0}, {0,0,0,0}, {0,0,0,0}};
+}
+
+const vector<vector<uint32_t>> &Board::GetState(void) 
+{
+    return boardState;
 }
