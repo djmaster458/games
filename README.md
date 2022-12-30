@@ -4,7 +4,7 @@ Repo containing games developed with SFML and C/C++ for Linux
 ## Installation and Running the Games
 In order to build each game, you will need to have SFML installed.  
 Follow [this tutorial](https://www.sfml-dev.org/tutorials/2.5/start-linux.php) for installing SFML for Linux.  
-Then use each games makefile and `make` to create the executable.  
+Then use each games makefile and `make release` to create the executable.  
 Run the game by using `./<game-name>`  
 Note: if you downloaded SFML to a non-standard path you may need to tell the linker where to find the libraries  
 If this is the case, try `export LD_LIBRARY_PATH=<sfml-install-path>/lib && ./<game-name>`

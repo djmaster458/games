@@ -66,6 +66,7 @@ CPPUTEST_HOME = ../cpputest
 #
 # SRC_DIRS += example-platform
 SRC_FILES += src/Board.cpp
+SRC_FILES += src/Tile.cpp
 
 # --- TEST_SRC_FILES and TEST_SRC_DIRS ---
 # Test files are always included in the build.
@@ -157,7 +158,7 @@ CPPUTEST_CXXFLAGS += -Wno-c++98-compat
 
 # --- LD_LIBRARIES -- Additional needed libraries can be added here.
 # commented out example specifies math library
-#LD_LIBRARIES += -lm
+LD_LIBRARIES += -lsfml-graphics
 
 # Look at $(CPPUTEST_HOME)/build/MakefileWorker.mk for more controls
 

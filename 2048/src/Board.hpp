@@ -2,6 +2,7 @@
 #define BOARD_H
 
 #include <vector>
+#include <cstdint>
 
 using namespace std;
 

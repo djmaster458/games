@@ -6,3 +6,4 @@ cpputest/
 *test-lib/
 *_tests
 *_tests.txt
+.vscode
